@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Template
 metadata:
   annotations:
-    description: Template for deploy Java SE applications
+    description: Template for deploy microservices with Java 8
     iconClass: icon-openjdk
-    tags: instant-app,javase,openjdk
+    tags: javase,openjdk,java,microservices,java8
   name: javase
   namespace: develop
 objects:
@@ -87,14 +87,8 @@ objects:
           ports:
           - containerPort: 8080
             protocol: TCP
-          resources:
-            limits:
-              memory: ${POD_MAX_MEM}M
-            request:
-              memory: ${POD_MAX_MEM}M
-          securityContext:
-            capabilities: {}
-            privileged: false
+          resources: {}
+          securityContext: {}
           terminationMessagePath: /dev/termination-log
         dnsPolicy: ClusterFirst
         restartPolicy: Always
@@ -104,7 +98,7 @@ parameters:
   displayName: Application Name
   name: APP_NAME
   required: true
-- description: Artifact url (jar, zip, tar.gz)
+- description: Artifact url (jar, war)
   displayName: Artifact url
   name: ARTIFACT_URL
 - description: Executable jar path
@@ -113,14 +107,10 @@ parameters:
 - description: Java options
   displayName: JVM options
   name: JAVA_OPTS_EXT
-  value: -Djava.security.egd=file:/dev/./urandom -Xmx400m
+  value: -Djava.security.egd=file:/dev/./urandom
 - description: Application java parameters
   displayName: JVM application parameters
   name: JAVA_PARAMETERS
-- description: Maximum memory for the pods (in Megabytes)
-  displayName: Pods Max Memory
-  name: POD_MAX_MEM
-  value: "512"
 - description: TimeZone for the running containers.
   displayName: TimeZone
   name: TZ
