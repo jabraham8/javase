@@ -5,8 +5,8 @@ MAINTAINER BOL Paradigma carrefour-bol@paradigmadigital.com
 ADD application.jar /
 
 ENV JAVA_VERSION 1.8.0
-ENV GID 20000
-ENV UID 20000
+##ENV GID 20000
+##ENV UID 20000
 
 ENV APP_HOME /opt/app 
 ENV IMAGE_SCRIPTS_HOME /opt/produban
@@ -18,8 +18,8 @@ RUN mkdir -p $APP_HOME && \
 COPY Dockerfile $IMAGE_SCRIPTS_HOME/Dockerfile
 COPY java-buildpack-memory-calculator $IMAGE_SCRIPTS_HOME/bin/java-buildpack-memory-calculator
 
-RUN groupadd --gid $GID java && useradd --uid $UID -m -g java java && \
-    yum -y install \
+##RUN groupadd --gid $GID java && useradd --uid $UID -m -g java java && \
+RUN yum -y install \
        java-$JAVA_VERSION-openjdk-devel \
        procps-ng \
        strace \
@@ -29,8 +29,11 @@ RUN groupadd --gid $GID java && useradd --uid $UID -m -g java java && \
 
 ADD scripts $IMAGE_SCRIPTS_HOME 
 
-RUN chown -R java:java $APP_HOME && \
-    chown -R java:java $IMAGE_SCRIPTS_HOME
+##RUN chown -R java:java $APP_HOME && \
+##    chown -R java:java $IMAGE_SCRIPTS_HOME
+RUN chown -R 1001:1001 $APP_HOME && \
+    chown -R 1001:1001 $IMAGE_SCRIPTS_HOME	
+	
 
 EXPOSE 8080
 #######################################################################
@@ -44,10 +47,12 @@ ENV com.produban.imageowner="Products and Services" \
     com.produban.description="Java 8 runtime for Spring boot microservices" \
     com.produban.components="java8"
 
-USER java
+##USER java
+USER 1001
 WORKDIR $IMAGE_SCRIPTS_HOME
 
-RUN export PATH=$PATH:$IMAGE_SCRIPTS_HOME
+##RUN export PATH=$PATH:$IMAGE_SCRIPTS_HOME
+##RUN chmod -R +x $IMAGE_SCRIPTS_HOME/*.sh
 
 ENTRYPOINT [ "./control.sh" ]
 CMD [ "start" ]
