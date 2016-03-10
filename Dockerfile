@@ -48,11 +48,12 @@ ENV com.produban.imageowner="Products and Services" \
     com.produban.components="java8"
 
 ##USER java
-USER 1001
+
+RUN chmod -R +x $IMAGE_SCRIPTS_HOME
+##RUN export PATH=$PATH:$IMAGE_SCRIPTS_HOME
 WORKDIR $IMAGE_SCRIPTS_HOME
 
-##RUN export PATH=$PATH:$IMAGE_SCRIPTS_HOME
-##RUN chmod -R +x $IMAGE_SCRIPTS_HOME/*.sh
+USER 1001
 
 ENTRYPOINT [ "./control.sh" ]
 CMD [ "start" ]
