@@ -13,7 +13,6 @@ ENV IMAGE_SCRIPTS_HOME /opt/produban
 
 RUN mkdir -p $APP_HOME && \
 	mkdir $IMAGE_SCRIPTS_HOME && \
-    mkdir -p $IMAGE_SCRIPTS_HOME/certs && \
     mkdir -p $IMAGE_SCRIPTS_HOME/bin
 
 COPY Dockerfile $IMAGE_SCRIPTS_HOME/Dockerfile
@@ -29,12 +28,10 @@ RUN groupadd --gid $GID java && useradd --uid $UID -m -g java java && \
     yum clean all
 
 ADD scripts $IMAGE_SCRIPTS_HOME 
-ADD certs $IMAGE_SCRIPTS_HOME/certs
 
 RUN chown -R java:java $APP_HOME && \
     chown -R java:java $IMAGE_SCRIPTS_HOME
 
-RUN cd $IMAGE_SCRIPTS_HOME/certs; ./importCerts.sh
 EXPOSE 8080
 #######################################################################
 ##### We have to expose image metada as label and ENV 
