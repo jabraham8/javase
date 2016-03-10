@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Custom_Produban_Layer_Version=1.0"
+
+entries=`env | grep -i "version"`
+
+for entry in $entries ; do
+  echo $entry
+done
