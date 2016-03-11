@@ -8,9 +8,8 @@ ENV APP_HOME /opt/app
 ENV IMAGE_SCRIPTS_HOME /opt/paradigma
 
 RUN mkdir -p $APP_HOME && \
-	mkdir $IMAGE_SCRIPTS_HOME && \
-    mkdir -p $IMAGE_SCRIPTS_HOME/bin
-
+	mkdir $IMAGE_SCRIPTS_HOME
+	
 RUN yum -y install \
        java-$JAVA_VERSION-openjdk-devel \
        procps-ng \
@@ -25,7 +24,8 @@ COPY scripts $IMAGE_SCRIPTS_HOME
 RUN chown -R 1001:1001 $APP_HOME && \
     chown -R 1001:1001 $IMAGE_SCRIPTS_HOME	
 	
-RUN chmod -R +x $IMAGE_SCRIPTS_HOME
+RUN chmod -R +rwx $IMAGE_SCRIPTS_HOME
+	chmod -R +rwx $APP_HOME
 	
 EXPOSE 8080
 
