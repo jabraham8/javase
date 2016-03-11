@@ -24,7 +24,7 @@ COPY scripts $IMAGE_SCRIPTS_HOME
 RUN chown -R 1001:1001 $APP_HOME && \
     chown -R 1001:1001 $IMAGE_SCRIPTS_HOME	
 	
-RUN chmod -R +rwx $IMAGE_SCRIPTS_HOME
+RUN chmod -R +rwx $IMAGE_SCRIPTS_HOME && \
 	chmod -R +rwx $APP_HOME
 	
 EXPOSE 8080
