@@ -12,7 +12,7 @@ else
    export TZ="Europe/Madrid"
 fi
 
-LOG_DIR=$HOME/logs/
+LOG_DIR=$APP_HOME/logs/
 mkdir -p $LOG_DIR
 LOG_FILE=${LOG_DIR}service_manager_binder.log
 
