@@ -5,6 +5,7 @@ ADD application.jar /
 
 ENV JAVA_VERSION 1.8.0
 ENV GID 20000
+#This hast to be the userId because is the one that runs openshift (Paradigma Openshift)
 ENV UID 1000060000
 ENV APP_HOME /opt/app 
 ENV IMAGE_SCRIPTS_HOME /opt/paradigma
