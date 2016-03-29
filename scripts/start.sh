@@ -56,4 +56,14 @@ then
    JAR_PATH="/application.jar"
 fi
 
+# Load filebeat index template in ElasticSearch. The name of the docker will be elk.
+curl -XPUT 'http://elk:9200/_template/filebeat?pretty' -d@/etc/filebeat/filebeat.template.json
+
+# Settle filebeat pid file
+mkdir -p $APP_HOME/filebeat
+export PIDFILE=$APP_HOME/filebeat/pid
+
+# Start filebeat
+/etc/init.d/filebeat start -c $FILEBEAT_CONF_DIR/filebeat.yml
+
 exec java $JAVA_HEAP $JAVA_OPTS_EXT -jar "$JAR_PATH" $JAVA_PARAMETERS
